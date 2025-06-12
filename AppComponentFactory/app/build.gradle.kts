@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.fir.scopes.impl.overrides
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
