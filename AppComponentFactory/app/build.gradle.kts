@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.fir.scopes.impl.overrides
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +19,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("sign") {
+            storeFile = File(projectDir,"keystore.keystore")
+            storePassword = "android"
+            keyAlias = "android"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -24,6 +35,34 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("sign")
+        }
+        create("branchA") {
+            signingConfig = signingConfigs.getByName("sign")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        create("branchB") {
+            signingConfig = signingConfigs.getByName("sign")
+
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    sourceSets {
+
+        getByName("branchA") {
+            manifest.srcFile("src/branchA/AndroidManifest.xml")
+        }
+        getByName("branchB") {
+            manifest.srcFile("src/branchB/AndroidManifest.xml")
+            java.srcDirs("src/branchB/java")
         }
     }
     compileOptions {

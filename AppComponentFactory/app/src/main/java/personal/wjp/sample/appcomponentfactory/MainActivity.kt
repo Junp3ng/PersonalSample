@@ -1,6 +1,7 @@
 package personal.wjp.sample.appcomponentfactory
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -14,11 +15,15 @@ import androidx.appcompat.app.AppCompatActivity
 import personal.wjp.sample.appcomponentfactory.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private fun log(msg:String) {
+        Log.d("WJP", "MainActivity: $msg")
+    }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        log("onCreate")
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
